@@ -6,6 +6,8 @@ from config import Config
 from tokenizer import WordPieceTokenizer
 import torch.multiprocessing as mp
 
+from process import process_dataset
+
 
 def worker_init_fn(worker_id):
     """Function to initialize each worker"""
@@ -60,18 +62,18 @@ class AmazonReviewDataset(Dataset):
 def create_dataloaders(config):
     # Load the dataset with trust_remote_code=True
     print(f"Loading dataset: {config.dataset_name}, subset: {config.dataset_subset}")
-    dataset = load_dataset(
-        config.dataset_name, config.dataset_subset, trust_remote_code=True
-    )
+    # dataset = load_dataset(
+    #     config.dataset_name, config.dataset_subset, trust_remote_code=True
+    # )
 
-    # Print dataset structure
-    print("Dataset structure:", dataset)
-    print("Available splits:", list(dataset.keys()))
+    # # Print dataset structure
+    # print("Dataset structure:", dataset)
+    # print("Available splits:", list(dataset.keys()))
 
-    # Select columns and limit number of examples
-    ds_raw = dataset["full"].select_columns(["text", "rating"])
-    ds_raw = ds_raw.select(range(min(config.max_examples, len(dataset["full"]))))
-
+    # # Select columns and limit number of examples
+    # ds_raw = dataset["full"].select_columns(["text", "rating"])
+    # ds_raw = ds_raw.select(range(min(config.max_examples, len(dataset["full"]))))
+    ds_raw = process_dataset()
     print(f"Selected {len(ds_raw)} examples from 'full' split")
 
     # Train a tokenizer or load a pre-trained one
