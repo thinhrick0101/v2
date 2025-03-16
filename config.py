@@ -1,8 +1,8 @@
 class Config:
     # Dataset configuration
-    dataset_name = "McAuley-Lab/Amazon-Reviews-2023"
+    dataset_name = "nanaut/MLVU144"
     dataset_subset = "raw_review_All_Beauty"
-    max_examples = 250000  # Limit number of examples to process
+    max_examples = 300000  # Limit number of examples to process
 
     # Tokenizer configuration
     vocab_size = 30522
